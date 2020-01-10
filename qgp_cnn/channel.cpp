@@ -4,18 +4,16 @@ Channel::Channel(int zDim, int yDim, int xDim)
 {
     shape[0] = zDim; shape[1] = yDim; shape[2] = xDim;
 
-    // Creates a 3d QVector withe the dimensions zDim, yDim, xDim filled woth zeros and assigns it to 'content'.
+    // Creates a 3d QVector withe the dimensions zDim, yDim, xDim filled with zeros and assigns that QVector to 'content'.
     content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0)));
 
 }
 
-/* Returns reference to a cell in 'content' selected by z, y and x coordinates. */
 double &Channel::cell(int z, int y, int x)
 {
     return content[z][y][x];
 }
 
-/* Sets every cell of 'content' to 0 */
 void Channel::clear()
 {
     for (QVector<QVector<double>>& z : content) {
@@ -40,6 +38,11 @@ void Channel::activate()
 
 void Channel::pad()
 {
+    if (padded){
+        cout << "\nAlready padded!";
+        return;
+    }
+
     for (QVector<QVector<double>>& plane : content){
         plane.insert(0, 1, QVector<double>(shape[2], 0));
         plane.push_back(QVector<double>(shape[2], 0));
@@ -52,6 +55,9 @@ void Channel::pad()
     content.insert(0, 1,
                    QVector<QVector<double>>(shape[1]+2, QVector<double>(shape[2]+2, 0) ) );
     content.push_back(QVector<QVector<double>>(shape[1]+2, QVector<double>(shape[2]+2, 0) ) );
+
+    padded = true;
+    shape[0] += 2; shape[1] += 2; shape[2] += 2;
 }
 
 
@@ -68,6 +74,11 @@ void Channel::printContent()
             }
         }
     }
+}
+
+QVector<QVector<QVector<double> > > &Channel::contentRef()
+{
+    return content;
 }
 
 double Channel::lRelu(double x)

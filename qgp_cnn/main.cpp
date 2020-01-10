@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     myChan.printContent();
     */
     Kernel myKern(3, 3, 3);
-    myKern.printContent();
+    myChan.printContent();
 
     return a.exec();
 }

@@ -12,6 +12,7 @@ using namespace std;
 class Kernel
 {
 public:
+    /*  */
     Kernel(int zDim=3, int yDim=3, int xDim=3);
     void reset();
     void printContent();
