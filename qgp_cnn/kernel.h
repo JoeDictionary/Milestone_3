@@ -13,13 +13,23 @@ class Kernel
 {
 public:
     /*  */
-    Kernel(int zDim=3, int yDim=3, int xDim=3);
+    Kernel(int filter_amount, int zDim=3, int yDim=3, int xDim=3);
+
+    /*  */
     void reset();
+
+    /*  */
     void printContent();
 
-    QVector<QVector<QVector<double>>> content;
-    int shape [3];
+    /* Contains content of the kernel object. */
+    QVector< QVector<QVector<QVector<double>>> > content;
+
+    int filterShape [3];
+
+    int kernelSize;
+
     int nChannels = 28;
+
     int nBins;
 
 

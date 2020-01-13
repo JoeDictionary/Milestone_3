@@ -2,12 +2,17 @@
 
 /* Creates a 3D kernel with the dimensions zDim, yDim, xDim which is stored in 'content'. Initiates the weights randomly.
  * Sets every position of 'shape' to one of the three passed dimensions of the kernel. */
-Kernel::Kernel(int zDim, int yDim, int xDim)
+Kernel::Kernel(int filter_amount, int zDim, int yDim, int xDim)
 {
-    nBins = zDim * yDim * xDim;
-    shape[0] = zDim; shape[1] = yDim; shape[2] = xDim;
+    // Shape of every filter in the kernel.
+    filterShape[0] = zDim; filterShape[1] = yDim; filterShape[2] = xDim;
+    // Kernel size is the amount of filters in that kernel.
+    kernelSize = filter_amount;
 
-    content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0.0) ));
+    nBins = zDim * yDim * xDim;
+
+    // Sets content to an array of 'filter_amount' 'zDim'*'yDim'*'xDim'-filters.
+    content =  QVector< QVector<QVector<QVector<double>>> >(filter_amount, QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0.0))) );
     srand(static_cast<unsigned int>(clock()));
     reset();
 
@@ -16,10 +21,12 @@ Kernel::Kernel(int zDim, int yDim, int xDim)
 /* Sets every weight of 'content' */
 void Kernel::reset()
 {
-    for (QVector<QVector<double>>& z : content) {
-        for (QVector<double>& y : z) {
-            for (double& x : y){
-                x = doubleRand() * (1/sqrt(nChannels*nBins));
+    for (QVector<QVector<QVector<double>>> filter : content) {
+        for (QVector<QVector<double>>& z : filter) {
+            for (QVector<double>& y : z) {
+                for (double& x : y){
+                    x = doubleRand() * (1/sqrt(nChannels*nBins));
+                }
             }
         }
     }
@@ -27,12 +34,18 @@ void Kernel::reset()
 
 void Kernel::printContent()
 {
-    for (QVector<QVector<double>> z : content) {
-        cout << "\n";
-        for (QVector<double> y : z) {
+    for (QVector<QVector<QVector<double>>> filter : content) {
+        for (QVector<QVector<double>> z : filter) {
             cout << "\n";
-            for (double x : y){
-                cout << x << " ";
+            for (QVector<double> y : z) {
+                cout << "\n";
+                for (double x : y){
+                    if (x < 0) {
+                        printf("%.2f ", x);
+                    } else {
+                        printf(" %.2f ", x);
+                    }
+                }
             }
         }
     }
