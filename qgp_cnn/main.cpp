@@ -1,10 +1,12 @@
 #include <QCoreApplication>
 #include <channel.h>
 #include <kernel.h>
-#include <QDebug>
+#include <dataloader.h>
 
+#include <QDebug>
 #include <cstdlib>
 #include <ctime>
+#include <QtDebug>
 
 
 int main(int argc, char *argv[])
@@ -17,9 +19,14 @@ int main(int argc, char *argv[])
     myChan.pad();
     myChan.printContent();
     */
-    Kernel myKern(3, 3, 3);
+    Kernel myKern(4);
     myKern.printContent();
+    qDebug() << myKern.kernelSize;
     // myChan.printContent();
+
+    DataLoader myLoader;
+    myLoader.loadBatch();
+
 
     return a.exec();
 }

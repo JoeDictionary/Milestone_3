@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         channel.cpp \
+        dataloader.cpp \
         kernel.cpp \
         main.cpp
 
@@ -26,4 +27,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     channel.h \
+    dataloader.h \
     kernel.h
