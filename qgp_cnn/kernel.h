@@ -16,7 +16,7 @@ class Kernel
 public:
     /* Initializes 'filter_amount' 3D-filters with the specified size 'filtSize'
      * inside the kernel and sets their weights randomly. */
-    Kernel(int filter_amount, int filtSize=3);
+    Kernel(int filter_amount, int channels=1, int filtSize=3);
 
     /* Sets weights of filters to random values. */
     void reset();
@@ -24,16 +24,21 @@ public:
     /* Prints every filter of in content to the console. */
     void printContent();
 
-    /* Contains content of the kernel object. */
-    QVector< QVector<QVector<QVector<double>>> > content;
+    /* Contains filters of the kernel. */
+    QVector<Filter> content;
 
-    /*  */
+    /* Dimension of the depth, width and height of the filters. */
     int filterSize;
 
-    /*  */
+    /* Amount of filters in the kernel. */
     int kernelSize;
 
+    /* Amount of total kernels in the "kernel-group" this kernel is in. */
+    int nChannels;
+
+    /* 'filterSize' to the power of 3. */
     int nBins;
+
 
 
 private:

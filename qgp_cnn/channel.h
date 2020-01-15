@@ -15,6 +15,9 @@ public:
     * Sets every position of 'shape' to one of the three passed dimensions of the channel ('zDim', 'yDim' and 'xDim'). */
     Channel(int zDim, int yDim, int xDim);
 
+    /* Returns reference to the 'content' property. */
+    QVector<QVector<QVector<double> > >& contentRef();
+
     /* Returns reference to a cell in 'content' selected by z, y and x coordinates. */
     double& cell(int z, int y, int x);
 
@@ -34,9 +37,6 @@ public:
     /* Contains dimensions passed in the constructor.
      * shape[0]=zDim; shape[1]=yDim; shape[2]=xDim */
     int shape [3];
-
-    /* Returns reference to the 'content' property. */
-    QVector<QVector<QVector<double>>>& contentRef();
 
     /* Indicates whether or not this channel has been padded. */
     bool padded = false;

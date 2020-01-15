@@ -20,7 +20,7 @@ private:
     QStringList trainingBatch;
 
     /* Directory iterator for iterating over training files in specified directory. */
-    QDirIterator* dirIterator = new QDirIterator("C:/Users/Filip/Desktop/dataset_half/nqgp", QDir::Files);
+    QDirIterator* dirIterator = new QDirIterator("C:/Users/filip/Desktop/PROGRAMMING/dataset_half/nqgp", QDir::Files);
 };
 
 #endif // DATALOADER_H
