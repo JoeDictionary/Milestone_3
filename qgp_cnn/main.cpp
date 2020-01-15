@@ -21,7 +21,8 @@ int main(int argc, char *argv[])
     */
     Kernel myKern(4);
     myKern.printContent();
-    qDebug() << myKern.kernelSize;
+    qDebug() << myKern.content.size();
+    // qDebug() << myKern.kernelSize;
     // myChan.printContent();
 
     DataLoader myLoader;

@@ -1,6 +1,8 @@
 #ifndef CHANNEL_H
 #define CHANNEL_H
 
+#include <filter.h>
+
 #include <QVector>
 #include <iostream>
 

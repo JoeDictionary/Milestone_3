@@ -1,6 +1,8 @@
 #ifndef DATALOADER_H
 #define DATALOADER_H
 
+#include <filter.h>
+
 #include <QtDebug>
 #include <QDirIterator>
 

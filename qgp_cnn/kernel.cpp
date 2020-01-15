@@ -1,18 +1,17 @@
 #include "kernel.h"
 
-/* Creates a 3D kernel with the dimensions zDim, yDim, xDim which is stored in 'content'. Initiates the weights randomly.
- * Sets every position of 'shape' to one of the three passed dimensions of the kernel. */
-Kernel::Kernel(int filterAmount, int zDim, int yDim, int xDim)
+
+Kernel::Kernel(int filterAmount, int filtSize)
 {
     // Shape of every filter in the kernel.
-    filterShape[0] = zDim; filterShape[1] = yDim; filterShape[2] = xDim;
+    filterSize = filtSize;
     // Kernel size is the amount of filters in that kernel.
     kernelSize = filterAmount;
 
-    nBins = zDim * yDim * xDim;
+    nBins = filterSize * filterSize * filterSize;
 
-    // Sets content to an array of 'filterAmount' 'zDim'*'yDim'*'xDim'-filters.
-    content =  QVector< QVector<QVector<QVector<double>>> >(filterAmount, QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0.0))) );
+    // Sets content to an array of 'filterAmount' filters.
+    content =  QVector< QVector<QVector<QVector<double>>> >( filterAmount, QVector<QVector<QVector<double>>>(filterSize, QVector<QVector<double>>(filterSize, QVector<double>(filterSize, 0.0))) );
 
     srand(static_cast<unsigned int>(clock()));
     reset();
@@ -36,9 +35,9 @@ void Kernel::printContent()
     int counter = 0;
 
     for (QVector<QVector<QVector<double>>> filter : content) {
+        cout << "\n\nFilter" << ++counter;
         for (QVector<QVector<double>> z : filter) {
-            cout << "\n\n";
-            cout << "Filter" << ++counter;
+            cout << "\n";
             for (QVector<double> y : z) {
                 cout << "\n";
                 for (double x : y){

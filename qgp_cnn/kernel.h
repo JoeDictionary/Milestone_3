@@ -1,6 +1,8 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#include <filter.h>
+
 #include <QVector>
 #include <iostream>
 #include <cstdlib>
@@ -12,9 +14,9 @@ using namespace std;
 class Kernel
 {
 public:
-    /* Initializes 'filter_amount' filters with the specified dimensions (zDim, yDim and xDim)
-     * and sets their weights randomly. */
-    Kernel(int filter_amount, int zDim=3, int yDim=3, int xDim=3);
+    /* Initializes 'filter_amount' 3D-filters with the specified size 'filtSize'
+     * inside the kernel and sets their weights randomly. */
+    Kernel(int filter_amount, int filtSize=3);
 
     /* Sets weights of filters to random values. */
     void reset();
@@ -26,7 +28,7 @@ public:
     QVector< QVector<QVector<QVector<double>>> > content;
 
     /*  */
-    int filterShape [3];
+    int filterSize;
 
     /*  */
     int kernelSize;
