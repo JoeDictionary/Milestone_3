@@ -17,12 +17,16 @@ public:
 
     QVector<int> convertStringData();
 
-private:
     /* Contains current batch of training data as strings. Each file is one string. */
     QStringList trainingBatch;
 
+private:
+
+
     /* Directory iterator for iterating over qgp training files in specified directory. */
-    QDirIterator* qFileIterator = new QDirIterator("C:/Users/Filip/Desktop/dataset_half/qgp", QDir::Files);
+    QDirIterator* qFileIterator = new QDirIterator("C:/Users/filip/Desktop/PROGRAMMING/dataset_half/qgp", QDir::Files);
+    // Home: C:/Users/filip/Desktop/PROGRAMMING/dataset_half/qgp
+    // Laptop: C:/Users/Filip/Desktop/dataset_half/qgp
 
     /* Directory iterator for iterating over nqgp training files in specified directory. */
     QDirIterator* nqFileIterator = new QDirIterator("C:/Users/filip/Desktop/PROGRAMMING/dataset_half/nqgp", QDir::Files);

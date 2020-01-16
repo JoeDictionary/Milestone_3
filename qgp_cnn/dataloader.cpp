@@ -7,8 +7,6 @@ DataLoader::DataLoader()
 
 void DataLoader::loadBatch()
 {
-    // Clears 'trainingData' list from already used data.
-    QStringList stringData;
     // trainingBatch.clear();
 
     for(int i=0;i < batchSize; i++){
@@ -17,11 +15,10 @@ void DataLoader::loadBatch()
 
         qDebug() << qFileIterator->fileName();
         file.open(QIODevice::ReadOnly);
-        stringData.append(file.readAll());
+        trainingBatch.append(file.readAll());
     }
 
     qDebug() << "(loadBatch) Next Batch Loaded!";
-    qDebug() << "(loadBatch) stringData-size: " << stringData.size();
 }
 
 QVector<int> DataLoader::convertStringData()
@@ -35,9 +32,12 @@ QVector<int> DataLoader::convertStringData()
     }
     */
 
+    // Splits the first string in 'trainingBatch' into numbers and adds them to 'processedData'.
     for (QString i : trainingBatch[0].split(QRegExp("\\s+"), QString::SkipEmptyParts )) {
-        // processedData.push_back(i.toInt());
+        processedData.push_back(i.toInt());
     }
+    // Removes used up data.
+    trainingBatch.removeFirst();
 
     return processedData;
 }

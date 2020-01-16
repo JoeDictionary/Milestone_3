@@ -14,8 +14,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    /*
     Channel myChan(20, 20, 20);
+
+    /*
     // myChan.cell(0,0,0) = -1;
     myChan.pad();
     myChan.printContent();
@@ -28,16 +29,16 @@ int main(int argc, char *argv[])
     // myKern.printContent();
     */
 
+    Filter myFilter(28);
 
     DataLoader myLoader;
     myLoader.loadBatch();
-    myLoader.convertStringData();
+    QVector<int> data = myLoader.convertStringData();
 
+    myChan.fill(data);
+    myChan.pad();
 
-    /*
-    Filter myFilter(1);
-    myFilter.printContent();
-    */
+    myChan.applyFilter(myFilter);
 
     return a.exec();
 }

@@ -9,6 +9,8 @@ Filter::Filter(int nChannels, int nBins, int size)
 
 void Filter::reset(int nChannels, int nBins)
 {
+    srand(static_cast<unsigned int>(clock()));
+
     for (QVector<QVector<double>>& z : content) {
         for (QVector<double>& y : z){
             for (double& x : y){

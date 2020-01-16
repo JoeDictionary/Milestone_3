@@ -5,6 +5,7 @@
 
 #include <QVector>
 #include <iostream>
+#include <QtDebug>
 
 using namespace std;
 
@@ -15,6 +16,12 @@ public:
     * Sets every position of 'shape' to one of the three passed dimensions of the channel ('zDim', 'yDim' and 'xDim'). */
     Channel(int zDim=20, int yDim=20, int xDim=20);
 
+    /* Runs every value in content through the lRelu activation function. */
+    void activate();
+
+    /* Applies filter to the channel and returns the resulting channel. */
+    Channel applyFilter(Filter filter);
+
     /* Returns reference to the 'content' property. */
     QVector<QVector<QVector<double> > >& contentRef();
 
@@ -24,8 +31,8 @@ public:
     /* Sets every cell of 'content' to 0 */
     void clear();
 
-    /* Runs every value in content through the lRelu activation function. */
-    void activate();
+    /* Fills the channel with data. Deletes the first zDim*yDim*xDim elements of the input list. */
+    void fill(QVector<int> &data);
 
     /* Pads the channel with one layer of zeros. Increasing its width, height, and depth by 2.
      * Adds 2 to every position of 'shape' and sets 'padded' to true. Does not pad if 'padded' is true. */
@@ -34,19 +41,17 @@ public:
     /* Prints 'content' to the console in a structured manner. */
     void printContent();
 
-    void fill(QVector<int> &data);
+    /* Indicates whether or not this channel has been padded. */
+    bool padded = false;
 
     /* Contains dimensions passed in the constructor.
      * shape[0]=zDim; shape[1]=yDim; shape[2]=xDim */
     int shape [3];
 
-    /* Indicates whether or not this channel has been padded. */
-    bool padded = false;
-
 private:
 
     /* Contains the channel's cells in a 3-dimensional array. */
-    QVector<QVector<QVector<double>>> content;
+    QVector<QVector<QVector<double> > > content;
 
     /* Leaky ReLU activation function. */
     double lRelu(double x);

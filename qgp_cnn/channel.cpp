@@ -36,6 +36,51 @@ void Channel::activate()
     }
 }
 
+Channel Channel::applyFilter(Filter filter)
+{
+    if (!padded) {
+        qDebug() << "(applyFilter) Channel not padded";
+        return NULL;
+    }
+    Channel output;
+
+    //  Channel dimensions without counting padding.
+    int zDim = shape[0]-2; int yDim = shape[1]-2; int xDim = shape[2]-2;
+
+    // The next 3 for-loops iterate through every possible filter-position in the channel.
+    // zPos, yPos, xPos are the coordinates of the current position of the filter.
+    for (int zPos=1; zPos < zDim; zPos++) {
+        for (int yPos=1; yPos < yDim; yPos++) {
+            for (int xPos=1; xPos < xDim; xPos++) {
+                int zMin = zPos-1; int yMin = yPos-1; int xMin = xPos-1;
+                int zFilter = 0; int yFilter = 0; int xFilter = 0;
+
+                // Sum of of one filter iteration.
+                double filterSum = 0;
+
+                // The next 3 for-loops iterate through every cell of channel currently covered by the filter at the coordinates zPos, yPos, xPos (Position).
+                // z, y, x are the coordinates of one of the cells covered by the filter.
+                // zFilter, yFilter, xFilter are coordinates of the 'filter' cells and oterate through every cel in 'filter'
+                for (int z = zMin; z < zMin+2; zMin++){
+                    yFilter = 0;
+                    for (int y = yMin; y < yMin+2; yMin++){
+                        xFilter = 0;
+                        for (int x = xMin; x < xMin+2; xMin++){
+                            filterSum += content[z][y][x] * filter.content[zFilter][yFilter][xFilter];
+                            ++xFilter;
+                        }
+                        ++yFilter;
+                    }
+                    ++zFilter;
+                }
+                // 'filterSum' has the same position in 'output' as the filter-position at the time of that iteration.
+                output.content[zPos][yPos][xPos] = filterSum;
+            }
+        }
+    }
+    return output;
+}
+
 void Channel::pad()
 {
     if (padded){
@@ -81,7 +126,8 @@ void Channel::fill(QVector<int> &data)
     for (int z = 0; z < shape[0]; z++){
         for (int y = 0; y < shape[1]; y++){
             for (int x = 0; x < shape[2]; x++){
-                // ????????????????????????????????????????????
+                content[z][y][x] = data[0];
+                data.removeFirst();
             }
         }
     }
