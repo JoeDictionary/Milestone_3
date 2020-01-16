@@ -13,7 +13,8 @@ Kernel::Kernel(int filterAmount,int channels, int filtSize)
     srand(static_cast<unsigned int>(clock()));
 
     // Sets content to an array of 'filterAmount' filters.
-    content = QVector<Filter>(filterAmount, Filter(channels));
+    content = QVector<Filter>(filterAmount, Filter(nChannels, nBins));
+    reset();
 }
 
 void Kernel::reset()

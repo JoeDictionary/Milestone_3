@@ -12,7 +12,7 @@ using namespace std;
 class Filter
 {
 public:
-    Filter(int nChannels, int size=3, int nBins=27);
+    Filter(int nChannels, int nBins=27, int size=3);
 
     /* Contains the weights of the filter. */
     QVector<QVector<QVector<double>>> content;

@@ -1,7 +1,7 @@
 #include "filter.h"
 
 
-Filter::Filter(int nChannels, int size, int nBins)
+Filter::Filter(int nChannels, int nBins, int size)
 {
     content = QVector< QVector<QVector<double>> >(size, QVector<QVector<double>>(size, QVector<double>(size, 0.0)) );
     reset(nChannels, nBins);

@@ -28,13 +28,15 @@ QVector<int> DataLoader::convertStringData()
 {
     QVector<int> processedData;
 
+    /*
     if (trainingBatch.size() <= 0) {
         qDebug() << "(DataLoader) Batch processed, loading next batch...";
         loadBatch();
     }
+    */
 
     for (QString i : trainingBatch[0].split(QRegExp("\\s+"), QString::SkipEmptyParts )) {
-        processedData.append(i.toInt());
+        // processedData.push_back(i.toInt());
     }
 
     return processedData;

@@ -24,13 +24,14 @@ int main(int argc, char *argv[])
     /*
     Kernel myKern(2);
     myKern.printContent();
-    myKern.reset();
-    myKern.printContent();
+    // myKern.reset();
+    // myKern.printContent();
     */
 
 
     DataLoader myLoader;
     myLoader.loadBatch();
+    myLoader.convertStringData();
 
 
     /*
