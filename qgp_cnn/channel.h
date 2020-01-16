@@ -13,7 +13,7 @@ class Channel
 public:
     /* Creates a channel with the dimensions 'zDim' 'yDim' 'xDim' represented as a 3d QVector. Initially filled with zeros.
     * Sets every position of 'shape' to one of the three passed dimensions of the channel ('zDim', 'yDim' and 'xDim'). */
-    Channel(int zDim, int yDim, int xDim);
+    Channel(int zDim=20, int yDim=20, int xDim=20);
 
     /* Returns reference to the 'content' property. */
     QVector<QVector<QVector<double> > >& contentRef();
@@ -33,6 +33,8 @@ public:
 
     /* Prints 'content' to the console in a structured manner. */
     void printContent();
+
+    void fill(QVector<int> &data);
 
     /* Contains dimensions passed in the constructor.
      * shape[0]=zDim; shape[1]=yDim; shape[2]=xDim */

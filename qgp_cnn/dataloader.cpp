@@ -12,14 +12,35 @@ void DataLoader::loadBatch()
     // trainingBatch.clear();
 
     for(int i=0;i < batchSize; i++){
-        QFile file(dirIterator->next());
-        qDebug() << dirIterator->fileName();
+        // Steps fileIterator to next file
+        QFile file(qFileIterator->next());
+
+        qDebug() << qFileIterator->fileName();
         file.open(QIODevice::ReadOnly);
         stringData.append(file.readAll());
     }
+
     qDebug() << "(loadBatch) Next Batch Loaded!";
     qDebug() << "(loadBatch) stringData-size: " << stringData.size();
 }
+
+QVector<int> DataLoader::convertStringData()
+{
+    QVector<int> processedData;
+
+    if (trainingBatch.size() <= 0) {
+        qDebug() << "(DataLoader) Batch processed, loading next batch...";
+        loadBatch();
+    }
+
+    for (QString i : trainingBatch[0].split(QRegExp("\\s+"), QString::SkipEmptyParts )) {
+        processedData.append(i.toInt());
+    }
+
+    return processedData;
+}
+
+
 
 /*
 void NeuralNet::feedInput()

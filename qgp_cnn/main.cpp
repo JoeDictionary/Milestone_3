@@ -15,21 +15,23 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     /*
-    Channel myChan(5, 5, 5);
+    Channel myChan(20, 20, 20);
     // myChan.cell(0,0,0) = -1;
     myChan.pad();
     myChan.printContent();
     */
 
+    /*
     Kernel myKern(2);
     myKern.printContent();
     myKern.reset();
     myKern.printContent();
+    */
 
-    /*
+
     DataLoader myLoader;
     myLoader.loadBatch();
-    */
+
 
     /*
     Filter myFilter(1);

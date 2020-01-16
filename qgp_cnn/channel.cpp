@@ -5,7 +5,7 @@ Channel::Channel(int zDim, int yDim, int xDim)
     shape[0] = zDim; shape[1] = yDim; shape[2] = xDim;
 
     // Creates a 3d QVector withe the dimensions zDim, yDim, xDim filled with zeros and assigns that QVector to 'content'.
-    content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0)));
+    content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 1)));
 
 }
 
@@ -71,6 +71,17 @@ void Channel::printContent()
             cout << "\n";
             for (double x : y){
                 cout << x << " ";
+            }
+        }
+    }
+}
+
+void Channel::fill(QVector<int> &data)
+{
+    for (int z = 0; z < shape[0]; z++){
+        for (int y = 0; y < shape[0]; y++){
+            for (int x = 0; x < shape[0]; x++){
+                // ?????????????????????????????????????????????
             }
         }
     }
