@@ -16,7 +16,7 @@ class Kernel
 public:
     /* Initializes 'filter_amount' 3D-filters with the specified size 'filtSize'
      * inside the kernel and sets their weights randomly. */
-    Kernel(int filter_amount, int channels=1, int filtSize=3);
+    Kernel(int filter_amount, int channels, int filtSize=3);
 
     /* Sets weights of filters to random values. */
     void reset();

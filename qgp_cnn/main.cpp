@@ -14,13 +14,20 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    Channel myChan(20, 20, 20);
 
-    /*
-    // myChan.cell(0,0,0) = -1;
-    myChan.pad();
-    myChan.printContent();
-    */
+    // Also amount of output channels.
+    int kernelAmount = 32;
+
+    int filterAmount = 28;
+    QVector<Kernel> kernelArray = QVector<Kernel>(kernelAmount, Kernel(filterAmount, kernelAmount));
+    // qDebug() << kernelArray.size();
+    for (Kernel i : kernelArray) {
+        for (Filter j : i.content) {
+            j.reset(32);
+        }
+    }
+
+    kernelArray[0].printContent();
 
     /*
     Kernel myKern(2);
@@ -29,6 +36,7 @@ int main(int argc, char *argv[])
     // myKern.printContent();
     */
 
+    /*
     Filter myFilter(28);
 
     DataLoader myLoader;
@@ -38,8 +46,8 @@ int main(int argc, char *argv[])
     myChan.fill(data);
     myChan.pad();
     // myChan.printContent();
-
     (myChan.applyFilter(myFilter)).printContent();
+    */
 
     return a.exec();
 }
