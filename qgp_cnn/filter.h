@@ -30,6 +30,9 @@ public:
 
     void printContent();
 
+    mt19937 gen(time(NULL)); // mersenne_twister_engine seeded with rd()
+    uniform_real_distribution<double> dis(-1.0, 1.0);
+
 };
 
 #endif // FILTER_H

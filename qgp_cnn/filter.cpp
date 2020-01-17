@@ -9,8 +9,6 @@ Filter::Filter(int nChannels, int nBins, int size)
 
 void Filter::reset(int nChannels, int nBins)
 {
-    srand(static_cast<unsigned int>(clock()));
-
     for (QVector<QVector<double>>& z : content) {
         for (QVector<double>& y : z){
             for (double& x : y){
@@ -22,6 +20,7 @@ void Filter::reset(int nChannels, int nBins)
 
 double Filter::doubleRand()
 {
+    srand(static_cast<unsigned int>(clock()));
     // If 'plusMinus' < 0.5 the random value is positive otherwise it is negative.
     float plusMinus = double(rand()) / (double(RAND_MAX) + 1.0);
 
