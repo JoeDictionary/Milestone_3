@@ -5,8 +5,7 @@ Channel::Channel(int zDim, int yDim, int xDim)
     shape[0] = zDim; shape[1] = yDim; shape[2] = xDim;
 
     // Creates a 3d QVector withe the dimensions zDim, yDim, xDim filled with zeros and assigns that QVector to 'content'.
-    content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 1)));
-
+    content = QVector<QVector<QVector<double>>>(zDim, QVector<QVector<double>>(yDim, QVector<double>(xDim, 0)));
 }
 
 double &Channel::cell(int z, int y, int x)
@@ -47,6 +46,10 @@ Channel Channel::applyFilter(Filter filter)
     //  Channel dimensions without counting padding.
     int zDim = shape[0]-2; int yDim = shape[1]-2; int xDim = shape[2]-2;
 
+    qDebug() << "(applyFilter) zDim: " << zDim;
+    qDebug() << "(applyFilter) yDim: " << yDim;
+    qDebug() << "(applyFilter) xDim: " << xDim;
+
     // The next 3 for-loops iterate through every possible filter-position in the channel.
     // zPos, yPos, xPos are the coordinates of the current position of the filter.
     for (int zPos=1; zPos < zDim; zPos++) {
@@ -55,17 +58,29 @@ Channel Channel::applyFilter(Filter filter)
                 int zMin = zPos-1; int yMin = yPos-1; int xMin = xPos-1;
                 int zFilter = 0; int yFilter = 0; int xFilter = 0;
 
+                /*
+                qDebug() << "(applyFilter) zMin: " << zMin;
+                qDebug() << "(applyFilter) yMin: " << yMin;
+                qDebug() << "(applyFilter) xMin: " << xMin;
+                */
+
                 // Sum of of one filter iteration.
                 double filterSum = 0;
 
                 // The next 3 for-loops iterate through every cell of channel currently covered by the filter at the coordinates zPos, yPos, xPos (Position).
                 // z, y, x are the coordinates of one of the cells covered by the filter.
                 // zFilter, yFilter, xFilter are coordinates of the 'filter' cells and oterate through every cel in 'filter'
-                for (int z = zMin; z < zMin+2; zMin++){
+                for (int z = zMin; z < zMin+2; z++){
                     yFilter = 0;
-                    for (int y = yMin; y < yMin+2; yMin++){
+                    for (int y = yMin; y < yMin+2; y++){
                         xFilter = 0;
-                        for (int x = xMin; x < xMin+2; xMin++){
+                        for (int x = xMin; x < xMin+2; x++){
+                            /*
+                            qDebug() << "(applyFilter) z: " << z;
+                            qDebug() << "(applyFilter) y: " << y;
+                            qDebug() << "(applyFilter) x: " << x;
+                            */
+
                             filterSum += content[z][y][x] * filter.content[zFilter][yFilter][xFilter];
                             ++xFilter;
                         }

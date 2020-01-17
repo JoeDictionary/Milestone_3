@@ -37,8 +37,9 @@ int main(int argc, char *argv[])
 
     myChan.fill(data);
     myChan.pad();
+    // myChan.printContent();
 
-    myChan.applyFilter(myFilter);
+    (myChan.applyFilter(myFilter)).printContent();
 
     return a.exec();
 }
