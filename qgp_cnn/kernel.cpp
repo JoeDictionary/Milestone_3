@@ -1,7 +1,7 @@
 #include "kernel.h"
 
 
-Kernel::Kernel(int filterAmount,int channels, int filtSize)
+Kernel::Kernel(int filterAmount,int channels,mt19937 seed, int filtSize)
 {
     // Shape of the filters in the kernel.
     filterSize = filtSize;
@@ -9,18 +9,19 @@ Kernel::Kernel(int filterAmount,int channels, int filtSize)
     kernelSize = filterAmount;
     nBins = filterSize * filterSize * filterSize;
     nChannels = channels;
+    randSeed = seed;
 
     srand(static_cast<unsigned int>(clock()));
 
     // Sets content to an array of 'filterAmount' filters.
-    content = QVector<Filter>(filterAmount, Filter(nChannels, nBins));
+    content = QVector<Filter>(filterAmount, Filter(nChannels,nBins));
     reset();
 }
 
 void Kernel::reset()
 {
     for (Filter& filter : content) {
-        filter.reset(nChannels, nBins);
+        filter.reset(nChannels, randSeed);
     }
 }
 

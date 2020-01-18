@@ -31,11 +31,13 @@ public:
     /* Sets every cell of 'content' to 0 */
     void clear();
 
-    /* Fills the channel with data. Deletes the first zDim*yDim*xDim elements of the input list. */
+    /* Fills the channel with data. Deletes the first zDim*yDim*xDim elements of the input list.
+     * Sets 'filled' to true. */
     void fill(QVector<int> &data);
 
     /* Pads the channel with one layer of zeros. Increasing its width, height, and depth by 2.
-     * Adds 2 to every position of 'shape' and sets 'padded' to true. Does not pad if 'padded' is true. */
+     * Adds 2 to every position of 'shape' and sets 'padded' to true. Does not pad if 'padded' is true.
+     * Does not pad if Channel is not yet filled with data. */
     void pad();
 
     /* Prints 'content' to the console in a structured manner. */
@@ -43,6 +45,9 @@ public:
 
     /* Indicates whether or not this channel has been padded. */
     bool padded = false;
+
+    /* Indicates whether or not this channel has been filled with data. */
+    bool filled = false;
 
     /* Contains dimensions passed in the constructor.
      * shape[0]=zDim; shape[1]=yDim; shape[2]=xDim */

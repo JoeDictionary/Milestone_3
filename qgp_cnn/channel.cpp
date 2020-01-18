@@ -41,20 +41,23 @@ Channel Channel::applyFilter(Filter filter)
         qDebug() << "(applyFilter) Channel not padded";
         return NULL;
     }
-    Channel output;
 
-    //  Channel dimensions without counting padding.
-    int zDim = shape[0]-2; int yDim = shape[1]-2; int xDim = shape[2]-2;
+    // Channel dimensions without counting padding.
+    // Used in looping over filter positions. Dimensions of the output channel.
+    int zOut = shape[0]-2; int yOut = shape[1]-2; int xOut = shape[2]-2;
 
-    qDebug() << "(applyFilter) zDim: " << zDim;
-    qDebug() << "(applyFilter) yDim: " << yDim;
-    qDebug() << "(applyFilter) xDim: " << xDim;
+    // Output channel with each dimension of the current channel minus 2.
+    Channel output(zOut, yOut, xOut);
+
+    qDebug() << "(applyFilter) zDim: " << zOut;
+    qDebug() << "(applyFilter) yDim: " << yOut;
+    qDebug() << "(applyFilter) xDim: " << xOut;
 
     // The next 3 for-loops iterate through every possible filter-position in the channel.
     // zPos, yPos, xPos are the coordinates of the current position of the filter.
-    for (int zPos=1; zPos < zDim; zPos++) {
-        for (int yPos=1; yPos < yDim; yPos++) {
-            for (int xPos=1; xPos < xDim; xPos++) {
+    for (int zPos=1; zPos < zOut; zPos++) {
+        for (int yPos=1; yPos < yOut; yPos++) {
+            for (int xPos=1; xPos < xOut; xPos++) {
                 int zMin = zPos-1; int yMin = yPos-1; int xMin = xPos-1;
                 int zFilter = 0; int yFilter = 0; int xFilter = 0;
 
@@ -99,30 +102,38 @@ Channel Channel::applyFilter(Filter filter)
 void Channel::pad()
 {
     if (padded){
-        cout << "\nAlready padded!";
+        cout << "\nChannel already padded!";
+        return;
+    } else if (!filled) {
+        cout << "\nChannel not yet filled with data!";
         return;
     }
 
+
     for (QVector<QVector<double>>& plane : content){
+        // For every "2d-plane"(2d-vector) of the current 3d-vector, add a row of zeros
+        // at the beginning and end of the "plane". Added rows are 'shape[2]'(x-Dimension) long.
         plane.insert(0, 1, QVector<double>(shape[2], 0));
         plane.push_back(QVector<double>(shape[2], 0));
         for (QVector<double>& row : plane){
+            // For every "row" in every "plane" add a zero at the beggining and end of that "row".
             row.insert(0, 1, 0);
             row.push_back(0);
         }
     }
 
-    content.insert(0, 1,
-                   QVector<QVector<double>>(shape[1]+2, QVector<double>(shape[2]+2, 0) ) );
+    // Insert a 2d-vector of zeros at the beginning and the end of the channel-vector in the dimensions
+    // 'shape[2]'+2 (current x-Dimension plus 2) and 'shape[1]'+2 (current y-Dimension plus 2).
+    content.insert(0, 1, QVector<QVector<double>>(shape[1]+2, QVector<double>(shape[2]+2, 0) ) );
     content.push_back(QVector<QVector<double>>(shape[1]+2, QVector<double>(shape[2]+2, 0) ) );
 
-    padded = true;
+    // Increses each dimension property of the channel by 2 because of the
+    // one-layer-padding (one layer of zeros).
     shape[0] += 2; shape[1] += 2; shape[2] += 2;
+
+    padded = true;
 }
 
-
-
-/* Prints every cell of 'content' to the console. */
 void Channel::printContent()
 {
     for (QVector<QVector<double>> z : content) {
@@ -146,6 +157,7 @@ void Channel::fill(QVector<int> &data)
             }
         }
     }
+    filled = true;
 }
 
 QVector<QVector<QVector<double> > > &Channel::contentRef()
