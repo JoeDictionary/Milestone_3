@@ -38,12 +38,14 @@ void Filter::printContent()
     for (QVector<QVector<double>> z : content) {
         for (QVector<double> y : z) {
             for (double x : y){
-                // cout << x << " ";
+                cout << x << " ";
+                /*
                 if (x < 0) {
                     printf("%.2f ", x);
                 } else {
                     printf(" %.2f ", x);
                 }
+                */
             }
             cout << "\n";
         }

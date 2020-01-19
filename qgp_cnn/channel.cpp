@@ -49,22 +49,28 @@ Channel Channel::applyFilter(Filter filter)
     // Output channel with each dimension of the current channel minus 2.
     Channel output(zOut, yOut, xOut);
 
-    qDebug() << "(applyFilter) zDim: " << zOut;
-    qDebug() << "(applyFilter) yDim: " << yOut;
-    qDebug() << "(applyFilter) xDim: " << xOut;
+    qDebug() << "(applyFilter) zOut: " << zOut;
+    qDebug() << "(applyFilter) yOut: " << yOut;
+    qDebug() << "(applyFilter) xOut: " << xOut << "\n";
 
     // The next 3 for-loops iterate through every possible filter-position in the channel.
     // zPos, yPos, xPos are the coordinates of the current position of the filter.
-    for (int zPos=1; zPos < zOut; zPos++) {
-        for (int yPos=1; yPos < yOut; yPos++) {
-            for (int xPos=1; xPos < xOut; xPos++) {
+    for (int zPos=1; zPos <= zOut; zPos++) {
+        for (int yPos=1; yPos <= yOut; yPos++) {
+            for (int xPos=1; xPos <= xOut; xPos++) {
+
                 int zMin = zPos-1; int yMin = yPos-1; int xMin = xPos-1;
                 int zFilter = 0; int yFilter = 0; int xFilter = 0;
 
                 /*
                 qDebug() << "(applyFilter) zMin: " << zMin;
                 qDebug() << "(applyFilter) yMin: " << yMin;
-                qDebug() << "(applyFilter) xMin: " << xMin;
+                qDebug() << "(applyFilter) xMin: " << xMin << "\n";
+                */
+                /*
+                qDebug() << "(applayFilter) zPos: " << zPos;
+                qDebug() << "(applayFilter) yPos: " << yPos;
+                qDebug() << "(applayFilter) xPos: " << xPos << "\n";
                 */
 
                 // Sum of of one filter iteration.
@@ -72,17 +78,17 @@ Channel Channel::applyFilter(Filter filter)
 
                 // The next 3 for-loops iterate through every cell of channel currently covered by the filter at the coordinates zPos, yPos, xPos (Position).
                 // z, y, x are the coordinates of one of the cells covered by the filter.
-                // zFilter, yFilter, xFilter are coordinates of the 'filter' cells and oterate through every cel in 'filter'
-                for (int z = zMin; z < zMin+2; z++){
+                // zFilter, yFilter, xFilter are coordinates of the 'filter' cells and iterate through every cel in 'filter'
+                for (int z = zMin; z < zMin+3; z++){
                     yFilter = 0;
-                    for (int y = yMin; y < yMin+2; y++){
+                    for (int y = yMin; y < yMin+3; y++){
                         xFilter = 0;
-                        for (int x = xMin; x < xMin+2; x++){
-                            /*
-                            qDebug() << "(applyFilter) z: " << z;
-                            qDebug() << "(applyFilter) y: " << y;
-                            qDebug() << "(applyFilter) x: " << x;
-                            */
+                        for (int x = xMin; x < xMin+3; x++){
+
+                            // qDebug() << "(applyFilter) z: " << z;
+                            // qDebug() << "(applyFilter) y: " << y;
+                            // qDebug() << "(applyFilter) x: " << x;
+
 
                             filterSum += content[z][y][x] * filter.content[zFilter][yFilter][xFilter];
                             ++xFilter;
@@ -92,7 +98,7 @@ Channel Channel::applyFilter(Filter filter)
                     ++zFilter;
                 }
                 // 'filterSum' has the same position in 'output' as the filter-position at the time of that iteration.
-                output.content[zPos][yPos][xPos] = filterSum;
+                output.content[zPos-1][yPos-1][xPos-1] = filterSum;
             }
         }
     }
