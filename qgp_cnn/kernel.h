@@ -33,11 +33,13 @@ public:
     /* Amount of filters in the kernel. */
     int kernelSize;
 
+    /* 'filterSize' to the power of 3. */
+    int nBins;
+
     /* Amount of total kernels in the "kernel-group" this kernel is in. */
     int nChannels;
 
-    /* 'filterSize' to the power of 3. */
-    int nBins;
+    double bias = 1;
 
 private:
     double doubleRand();

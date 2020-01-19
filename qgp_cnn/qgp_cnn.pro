@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         channel.cpp \
+        conv3d.cpp \
         dataloader.cpp \
         filter.cpp \
         kernel.cpp \
@@ -28,6 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     channel.h \
+    conv3d.h \
     dataloader.h \
     filter.h \
     kernel.h

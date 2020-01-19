@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
 
     DataLoader myLoader("C:/Users/filip/Desktop/PROGRAMMING/dataset_half/qgp", "C:/Users/filip/Desktop/PROGRAMMING/dataset_half/nqgp");
     myLoader.loadBatch();
-    QVector<int> data = myLoader.convertStringData();
 
     /*
     Channel myChan(3, 3, 3);

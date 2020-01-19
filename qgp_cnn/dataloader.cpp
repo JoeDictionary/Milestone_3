@@ -1,13 +1,20 @@
 #include "dataloader.h"
 
-DataLoader::DataLoader()
+DataLoader::DataLoader(QString qgpPath, QString nqgpPath)
 {
+    qFileIterator = new QDirIterator(qgpPath, QDir::Files);
+    nqFileIterator = new QDirIterator(nqgpPath, QDir::Files);
+}
 
+DataLoader::~DataLoader()
+{
+    delete qFileIterator;
+    delete nqFileIterator;
 }
 
 void DataLoader::loadBatch()
 {
-    // trainingBatch.clear();
+    trainingBatch.clear();
 
     for(int i=0;i < batchSize; i++){
         // Steps fileIterator to next file
@@ -25,12 +32,10 @@ QVector<int> DataLoader::convertStringData()
 {
     QVector<int> processedData;
 
-    /*
     if (trainingBatch.size() <= 0) {
         qDebug() << "(DataLoader) Batch processed, loading next batch...";
         loadBatch();
-    }
-    */
+    }    
 
     // Splits the first string in 'trainingBatch' into numbers and adds them to 'processedData'.
     for (QString i : trainingBatch[0].split(QRegExp("\\s+"), QString::SkipEmptyParts )) {
@@ -41,22 +46,3 @@ QVector<int> DataLoader::convertStringData()
 
     return processedData;
 }
-
-
-
-/*
-void NeuralNet::feedInput()
-{
-    QList<int> processedData;
-
-    // Splits first entry in string in 'trainingData' into strings of single digits, converts these to integers and appends them to 'processed' data.
-    for(QString i : trainingData[0].split(QRegExp("\\s+"), QString::SkipEmptyParts)) {
-        processedData.append(i.toInt());
-    }
-
-    // Sets every neuron's 'currentVal' in the input layer to the corresponding datapoint in 'processedData'.
-    for(int i = 0; net[0].size(); i++) {
-        net[0][i].currentVal = processedData[i];
-    }
-}
-*/
