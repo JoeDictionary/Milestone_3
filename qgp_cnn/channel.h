@@ -16,6 +16,8 @@ public:
     * Sets every position of 'shape' to one of the three passed dimensions of the channel ('zDim', 'yDim' and 'xDim'). */
     Channel(int zDim=20, int yDim=20, int xDim=20);
 
+    Channel operator + (Channel const &obj);
+
     /* Runs every value in content through the lRelu activation function. */
     void activate();
 
