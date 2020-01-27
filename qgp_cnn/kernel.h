@@ -42,7 +42,6 @@ public:
     double bias = 1;
 
 private:
-    double doubleRand();
 
     mt19937 randSeed;
 };

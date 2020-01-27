@@ -85,9 +85,9 @@ Channel Channel::applyFilter(Filter filter)
                 qDebug() << "(applyFilter) xMin: " << xMin << "\n";
                 */
                 /*
-                qDebug() << "(applayFilter) zPos: " << zPos;
-                qDebug() << "(applayFilter) yPos: " << yPos;
-                qDebug() << "(applayFilter) xPos: " << xPos << "\n";
+                qDebug() << "(applyFilter) zPos: " << zPos;
+                qDebug() << "(applyFilter) yPos: " << yPos;
+                qDebug() << "(applyFilter) xPos: " << xPos << "\n";
                 */
 
                 // Sum of of one filter iteration.
@@ -127,10 +127,11 @@ void Channel::pad()
     if (padded){
         cout << "\nChannel already padded!";
         return;
-    } else if (!filled) {
+    } /* else if (!filled) {
         cout << "\nChannel not yet filled with data!";
         return;
     }
+    */
 
 
     for (QVector<QVector<double>>& plane : content){

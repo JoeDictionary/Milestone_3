@@ -35,13 +35,3 @@ void Kernel::printContent()
         cout << "\n";
     }
 }
-
-double Kernel::doubleRand()
-{
-    float plusMinus = double(rand()) / (double(RAND_MAX) + 1.0);
-    if (plusMinus < 0.5){
-      return double(rand()) / (double(RAND_MAX) + 1.0);
-    } else {
-      return -(double(rand()) / (double(RAND_MAX) + 1.0));
-    }
-}
