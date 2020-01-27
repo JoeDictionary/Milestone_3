@@ -19,8 +19,11 @@ SOURCES += \
         conv3d.cpp \
         dataloader.cpp \
         filter.cpp \
+        flatten.cpp \
         kernel.cpp \
-        main.cpp
+        main.cpp \
+        maxpool3d.cpp \
+        object3d.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -32,4 +35,7 @@ HEADERS += \
     conv3d.h \
     dataloader.h \
     filter.h \
-    kernel.h
+    flatten.h \
+    kernel.h \
+    maxpool3d.h \
+    object3d.h

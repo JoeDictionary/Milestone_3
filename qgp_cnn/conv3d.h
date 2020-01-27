@@ -1,25 +1,25 @@
 #ifndef CONV3D_H
 #define CONV3D_H
 
-#include <dataloader.h>
-#include <kernel.h>
-#include <channel.h>
-
-#include <random>
-
+#include "object3d.h"
+#include "filter.h"
 
 class Conv3D
 {
 public:
-    Conv3D(int filterAmount, int outputChannelAmount, DataLoader loader, mt19937 seed);
+    Conv3D();
+    Conv3D(int,int);
+    QVector<object3D*> forward(QVector<object3D*>);
+    QVector<object3D*> backward(QVector<object3D*>);
 
-    QVector<Kernel> kernelArray;
+    QVector<QVector<Filter*>> filterSets;
 
-    QVector<Channel> inputChannels;
+    double lRelu(double);
+    double lReluDeriv(double);
 
-    QVector<Channel> outputChannels;
-
-
+    int nChannels;
+    int nKernels;
+    QVector<object3D*> cachedChannelCollection;
 };
 
 #endif // CONV3D_H

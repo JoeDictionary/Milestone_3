@@ -12,6 +12,7 @@ using namespace std;
 class Filter
 {
 public:
+    Filter(int,int,int);
     Filter(int nChannels, int size=3);
 
     /* Contains the weights of the filter. */
